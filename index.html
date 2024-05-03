@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>URL Shortener</h1>
+
+    <h2>Encode URL</h2>
+    <input type="text" id="longendURL" placeholder="Enter Long URL">
+    <button onclick="encodeURL()">Encode</button>
+    <p id="shortURL"></p>
+
+    <h2>Decode URL</h2>
+    <input type="text" id="shortendURL" placeholder="Enter Shortened URL">
+    <button onclick="decodeURL()">Decode</button>
+    <p id="longURL"></p>
+
+    <script>
+        const urlMap = {};
+        function encodeURL(shortLength = 6) {
+            const longURL = document.getElementById('longendURL').value;
+            const shortCode = generateShortCode(shortLength);
+            const surl = `https://exdomain.com/${shortCode}`;
+            document.getElementById('shortURL').textContent = "Short URL :" + surl;
+            
+
+
+            urlMap[surl] = longURL;
+
+
+
+        }
+
+        function decodeURL() {
+            const shortURL = document.getElementById('shortendURL').value;
+            const longURL = urlMap[shortURL];
+            if (longURL) {
+                document.getElementById('longURL').textContent = "Long URL : " + longURL;
+            }
+            else {
+                document.getElementById('longURL').textContent = "No Record of the given Short URL found.";
+
+            }
+        }
+
+        function generateShortCode(length = 6) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let shortCode = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                shortCode += characters.charAt(randomIndex);
+            }
+            return shortCode;
+        }
+
+    </script>
+</body>
+
+</html>
